@@ -24,7 +24,7 @@ source venv/bin/activate
 
 # Install dependencies
 echo "📥 Installing dependencies..."
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 
 # Check if model exists, if not train it
 if [ ! -f "models/air_quality_model.pkl" ]; then

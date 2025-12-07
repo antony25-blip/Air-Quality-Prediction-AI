@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import pandas as pd
+# import pandas as pd  # Removed for Vercel optimization
 import joblib
 import os
 from datetime import datetime
@@ -37,23 +37,30 @@ def load_model():
 def predict_air_quality(data):
     """Make prediction using the loaded model"""
     try:
-        # Convert input data to DataFrame
-        input_df = pd.DataFrame([data])
+        # Prepare input vector directly without pandas
+        input_vector = []
         
-        # Ensure all required features are present
+        # Ensure all required features are present and in the correct order
+        # feature_columns is a numpy array from training
         for col in feature_columns:
-            if col not in input_df.columns:
-                input_df[col] = 0.0
+            # col is the feature name (e.g., 'PM2.5')
+            # data has mapped keys (e.g., 'PM2.5')
+            val = data.get(col, 0.0)
+            input_vector.append(val)
         
-        # Reorder columns to match training data
-        input_df = input_df[feature_columns]
+        # Reshape for scikit-learn (1 sample, n features)
+        # We can use a 2D list or rely on numpy if available, but a list of lists works for sklearn too usually.
+        # However, since we have numpy installed (it's a dependency of scikit-learn), let's use it for safety/consistency if needed.
+        # But to be safe and simple:
+        input_array = [input_vector] 
+        # (sklearn accepts list of lists)
         
         # Make prediction
-        pred_encoded = model.predict(input_df)[0]
+        pred_encoded = model.predict(input_array)[0]
         pred_category = label_encoder.inverse_transform([pred_encoded])[0]
         
         # Get prediction probabilities
-        probabilities = model.predict_proba(input_df)[0]
+        probabilities = model.predict_proba(input_array)[0]
         confidence = max(probabilities)
         
         return {
