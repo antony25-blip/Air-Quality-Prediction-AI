@@ -1,0 +1,12 @@
+# Files to ignore for Vercel deployment to save space
+city_day.csv
+plots/
+venv/
+backend/venv/
+start_backend.sh
+start_frontend.sh
+train_model.py
+backend/train_model.py
+.git/
+.DS_Store
+backend/__pycache__/
