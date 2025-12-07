@@ -192,13 +192,12 @@ def get_features():
         ]
     })
 
+# Load model intentionally at module level so it runs on Vercel
+load_model()
+
 if __name__ == '__main__':
     # Create models directory if it doesn't exist
     os.makedirs('models', exist_ok=True)
     
-    # Load model on startup
-    if load_model():
-        logger.info("Starting Flask server...")
-        app.run(debug=True, host='0.0.0.0', port=5002)
-    else:
-        logger.error("Failed to load model. Server not started.")
+    logger.info("Starting Flask server...")
+    app.run(debug=True, host='0.0.0.0', port=5002)
