@@ -27,10 +27,15 @@ def load_model():
         base_dir = os.path.dirname(os.path.abspath(__file__))
         models_dir = os.path.join(base_dir, 'models')
 
-        # Load the model
-        model = joblib.load(os.path.join(models_dir, 'air_quality_model.pkl'))
-        label_encoder = joblib.load(os.path.join(models_dir, 'label_encoder.pkl'))
-        feature_columns = joblib.load(os.path.join(models_dir, 'feature_columns.pkl'))
+        # Load the model components into temporary variables
+        temp_model = joblib.load(os.path.join(models_dir, 'air_quality_model.pkl'))
+        temp_label_encoder = joblib.load(os.path.join(models_dir, 'label_encoder.pkl'))
+        temp_feature_columns = joblib.load(os.path.join(models_dir, 'feature_columns.pkl'))
+        
+        # Atomically update globals only if all loads succeeded
+        model = temp_model
+        label_encoder = temp_label_encoder
+        feature_columns = temp_feature_columns
         
         logger.info("Model loaded successfully")
         return True
@@ -92,10 +97,10 @@ def health_check():
 def predict():
     """Main prediction endpoint"""
     try:
-        # Check if model is loaded
-        if model is None:
+        # Check if model components are loaded
+        if model is None or feature_columns is None or label_encoder is None:
             return jsonify({
-                'error': 'Model not loaded. Please check server logs.'
+                'error': 'Model components not fully loaded. Please check server logs.'
             }), 500
         
         # Get input data
