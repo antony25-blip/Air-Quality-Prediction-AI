@@ -23,10 +23,14 @@ def load_model():
     global model, label_encoder, feature_columns
     
     try:
+        # Get absolute path to the directory containing this script
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        models_dir = os.path.join(base_dir, 'models')
+
         # Load the model
-        model = joblib.load('models/air_quality_model.pkl')
-        label_encoder = joblib.load('models/label_encoder.pkl')
-        feature_columns = joblib.load('models/feature_columns.pkl')
+        model = joblib.load(os.path.join(models_dir, 'air_quality_model.pkl'))
+        label_encoder = joblib.load(os.path.join(models_dir, 'label_encoder.pkl'))
+        feature_columns = joblib.load(os.path.join(models_dir, 'feature_columns.pkl'))
         
         logger.info("Model loaded successfully")
         return True
