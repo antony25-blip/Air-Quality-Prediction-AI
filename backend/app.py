@@ -30,7 +30,9 @@ def load_model():
         # Load the model components into temporary variables
         temp_model = joblib.load(os.path.join(models_dir, 'air_quality_model.pkl'))
         temp_label_encoder = joblib.load(os.path.join(models_dir, 'label_encoder.pkl'))
-        temp_feature_columns = joblib.load(os.path.join(models_dir, 'feature_columns.pkl'))
+        
+        # Hardcode feature columns to avoid dependency on pandas (feature_columns.pkl was a pandas Index)
+        temp_feature_columns = ['PM2.5', 'PM10', 'NO', 'NO2', 'NOx', 'NH3', 'CO', 'SO2', 'O3', 'Benzene', 'Toluene']
         
         # Atomically update globals only if all loads succeeded
         model = temp_model
@@ -173,7 +175,7 @@ def model_info():
     
     return jsonify({
         'model_type': type(model).__name__,
-        'feature_columns': feature_columns.tolist() if feature_columns is not None else [],
+        'feature_columns': feature_columns if feature_columns is not None else [],
         'classes': label_encoder.classes_.tolist() if label_encoder is not None else [],
         'n_features': len(feature_columns) if feature_columns is not None else 0
     })
