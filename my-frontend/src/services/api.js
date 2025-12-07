@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5002';
+const API_BASE_URL = '/api'; // Use relative path for proxy/Vercel
 
 class AirQualityAPI {
   async makePrediction(data) {

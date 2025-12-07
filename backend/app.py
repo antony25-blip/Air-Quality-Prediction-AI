@@ -75,7 +75,7 @@ def predict_air_quality(data):
         logger.error(f"Error making prediction: {str(e)}")
         raise e
 
-@app.route('/health', methods=['GET'])
+@app.route('/api/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
     return jsonify({
@@ -84,7 +84,7 @@ def health_check():
         'model_loaded': model is not None
     })
 
-@app.route('/predict', methods=['POST'])
+@app.route('/api/predict', methods=['POST'])
 def predict():
     """Main prediction endpoint"""
     try:
@@ -154,7 +154,7 @@ def predict():
             'error': f'Prediction failed: {str(e)}'
         }), 500
 
-@app.route('/model-info', methods=['GET'])
+@app.route('/api/model-info', methods=['GET'])
 def model_info():
     """Get information about the loaded model"""
     if model is None:
@@ -169,7 +169,7 @@ def model_info():
         'n_features': len(feature_columns) if feature_columns is not None else 0
     })
 
-@app.route('/features', methods=['GET'])
+@app.route('/api/features', methods=['GET'])
 def get_features():
     """Get list of required features for prediction"""
     return jsonify({
