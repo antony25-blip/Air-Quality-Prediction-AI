@@ -6,6 +6,6 @@ node_modules/
 dist/
 .env
 backend/venv/
-backend/models/
+# backend/models/ (Commented out for Vercel deployment)
 backend/plots/
-*.pkl
+# *.pkl (Commented out for Vercel deployment)
