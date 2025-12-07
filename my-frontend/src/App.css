@@ -1,0 +1,6 @@
+.text-xl mb-4 font-semibold {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  text-align: center;
+}

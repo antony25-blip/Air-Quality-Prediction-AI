@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+node_modules/
+dist/
+.env
+backend/venv/
+backend/models/
+backend/plots/
+*.pkl

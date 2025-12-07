@@ -1,0 +1,27 @@
+/* styles.css */
+.predict-btn {
+    padding: 12px 24px;
+    background: rgb(31, 70, 42);
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.3);
+    font-size: 16px;
+  }
+  
+  .predict-btn:hover {
+    background: rgb(21, 50, 31);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px -1px rgba(34, 197, 94, 0.4);
+  }
+  
+  /* Optional: center the container */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
